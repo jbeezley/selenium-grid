@@ -1,0 +1,7 @@
+---
+
+- name: Create the hosts file for all machines
+  template: src=hosts.j2 dest=/etc/hosts
+
+- name: Create the selenium user
+  user: name=selenium comment="Selenium"

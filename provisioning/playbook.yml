@@ -1,0 +1,13 @@
+---
+
+- hosts: all
+  roles:
+  - common
+
+#- hosts: hub
+#  roles:
+#  - role: hub
+#
+#- hosts: node1
+#  roles:
+#  - role: node

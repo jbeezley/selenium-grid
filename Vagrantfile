@@ -1,8 +1,6 @@
 
 Vagrant::configure("2") do |config|
-  config.vm.box = "box-cutter/ubuntu1404-desktop"
 
-  
   # Configure Selenium Hub
   config.vm.define :'hub' do |hub|
     hub.vm.box = "ubuntu/trusty64"
@@ -29,6 +27,7 @@ Vagrant::configure("2") do |config|
     node.vm.provider "virtualbox" do |v|
       v.gui = true
     end
+
     node.vm.network :private_network, ip: "192.168.10.11"
         node.vm.hostname = "node1.selenium.vm"
         node.vm.provider :virtualbox do |vb|
@@ -41,5 +40,18 @@ Vagrant::configure("2") do |config|
                         "--natdnsproxy1", "on"
                        ]
         end
+
+    # hack to get vagrant to provision all machines at once
+    node.vm.provision "ansible" do |ansible|
+      ansible.groups = {
+        "hubs" => ["hub"],
+        "nodes" => ["node1", "node2", "node3"]
+      }
+      ansible.playbook = "provisioning/playbook.yml"
+      ansible.limit = 'all'
+      ansible.sudo = true
+    end
+
   end
+
 end
