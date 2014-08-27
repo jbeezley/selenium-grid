@@ -3,18 +3,18 @@ Vagrant::configure("2") do |config|
   config.vm.box = "box-cutter/ubuntu1404-desktop"
 
   
-  # Configure Selenium Grid
-  config.vm.define :'selenium-grid' do |selenium_grid|
-    selenium_grid.vm.box = "ubuntu/trusty64"
-    selenium_grid.vm.provider "virtualbox" do |v|
+  # Configure Selenium Hub
+  config.vm.define :'hub' do |hub|
+    hub.vm.box = "ubuntu/trusty64"
+    hub.vm.provider "virtualbox" do |v|
       v.gui = false
     end
-    selenium_grid.vm.network :private_network, ip: "192.168.10.10"
-        selenium_grid.vm.hostname = "selenium.local.vm"
-        selenium_grid.vm.provider :virtualbox do |vb|
+    hub.vm.network :private_network, ip: "192.168.10.10"
+        hub.vm.hostname = "hub.selenium.vm"
+        hub.vm.provider :virtualbox do |vb|
           vb.customize [
                         "modifyvm", :id,
-                        "--name", "selenium-grid",
+                        "--name", "selenium-hub",
                         "--memory", "1024",
                         "--cpus", 1,
                         "--natdnshostresolver1", "on",
@@ -23,18 +23,18 @@ Vagrant::configure("2") do |config|
         end
   end
 
-    # Configure Selenium Node
-  config.vm.define :'node1' do |grid_node|
-    grid_node.vm.box = "box-cutter/ubuntu1404-desktop"
-    grid_node.vm.provider "virtualbox" do |v|
-      v.gui = false
+  # Configure Selenium Node
+  config.vm.define :'node1' do |node|
+    node.vm.box = "box-cutter/ubuntu1404-desktop"
+    node.vm.provider "virtualbox" do |v|
+      v.gui = true
     end
-    grid_node.vm.network :private_network, ip: "192.168.10.11"
-        grid_node.vm.hostname = "node.selenium.vm"
-        grid_node.vm.provider :virtualbox do |vb|
+    node.vm.network :private_network, ip: "192.168.10.11"
+        node.vm.hostname = "node1.selenium.vm"
+        node.vm.provider :virtualbox do |vb|
           vb.customize [
                         "modifyvm", :id,
-                        "--name", "node1",
+                        "--name", "selenium-node1",
                         "--memory", "1024",
                         "--cpus", 1,
                         "--natdnshostresolver1", "on",
