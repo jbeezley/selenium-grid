@@ -4,10 +4,10 @@
   roles:
   - common
 
-#- hosts: hub
-#  roles:
-#  - role: hub
-#
-#- hosts: node1
-#  roles:
-#  - role: node
+- hosts: hub
+  roles:
+  - { role: selenium, sel_role: hub }
+
+- hosts: node1
+  roles:
+  - { role: selenium, sel_role: node }

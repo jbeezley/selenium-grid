@@ -1,0 +1,3 @@
+[submodule "provisioning/roles/selenium"]
+	path = provisioning/roles/selenium
+	url = https://github.com/jbeezley/ansible-selenium-role.git

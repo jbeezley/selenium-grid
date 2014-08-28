@@ -1,1 +1,3 @@
-iface: '{{ ansible_default_ipv4.interface }}'
+iface: 'eth1'
+hub: 'http://{{ hostvars["hub"]["ansible_" + iface].ipv4.address }}:4444/grid/register'
+extra_args: '-host {{ hostvars[inventory_hostname]["ansible_" + iface].ipv4.address }} -log /var/log/selenium_{{sel_role}}.log'
